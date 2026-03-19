@@ -3,5 +3,7 @@ dist/
 uploads/
 data/
 .env
+.next/
 package-lock.json
 tsconfig.json
+next-env.d.ts

@@ -16,41 +16,44 @@ built this for a tiktok-style video discovery use case - users upload videos, vi
 ```bash
 npm install
 export GEMINI_API_KEY="your-key"
-npx tsx index.ts
+npm run dev
 ```
 
 runs on port 3000 by default.
 
-## endpoints
+## api routes
 
 **embed stuff:**
 ```bash
 # single file
-curl -X POST http://localhost:3000/embed -F "file=@video.mp4" -F "description=cat jumping off table"
-
-# batch (up to 20)
-curl -X POST http://localhost:3000/embed/batch -F "files=@vid1.mp4" -F "files=@vid2.mp4"
+curl -X POST http://localhost:3000/api/embed -F "file=@video.mp4" -F "description=cat jumping off table"
 ```
 
 **search:**
 ```bash
 # text search
-curl -X POST http://localhost:3000/search \
+curl -X POST http://localhost:3000/api/search \
   -H "Content-Type: application/json" \
   -d '{"query": "funny cat", "topK": 5}'
 
 # find similar (upload a reference image/video)
-curl -X POST http://localhost:3000/search/similar -F "file=@reference.jpg"
+curl -X POST http://localhost:3000/api/search/similar -F "file=@reference.jpg"
 ```
 
 **manage:**
 ```bash
 # list everything
-curl http://localhost:3000/items
+curl http://localhost:3000/api/items
 
 # delete
-curl -X DELETE http://localhost:3000/items/<id>
+curl -X DELETE http://localhost:3000/api/items/<id>
 ```
+
+## pages
+
+- `/` - home
+- `/upload` - drag and drop upload with description/tags
+- `/gallery` - browse and search through embedded media
 
 ## notes
 
@@ -61,6 +64,7 @@ curl -X DELETE http://localhost:3000/items/<id>
 
 ## stack
 
-- typescript + express
+- next.js 16 + react 19
+- tailwind + shadcn/ui
 - `@google/genai` sdk
 - cosine similarity for retrieval
